@@ -1,0 +1,73 @@
+package connection;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+
+
+public class PageAccess{
+
+	public static void main(String[] args) {
+		
+		final String TOKEN = "fa1d7fd58a04dde9cd61869ed94a7ec40c5b9ba6";
+		URL url = null;
+		try {
+			url = new URL("https://dronesim.facets-labs.com/api/dronetypes/69/");
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		HttpURLConnection con = null;
+		try {
+			con = (HttpURLConnection) url.openConnection();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		con.setRequestProperty("Authorization", TOKEN);
+		con.setRequestProperty("Accept", "application/json");
+
+		try {
+			con.setRequestMethod("GET");
+			int responseCode = con.getResponseCode();
+			System.out.println(responseCode);
+		} catch (ProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		BufferedReader reader = null;
+		 try {
+			reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+         StringBuilder response = new StringBuilder();
+         String line;
+         
+         try {
+			while ((line = reader.readLine()) != null) {
+			     response.append(line);
+			 }
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+         try {
+			reader.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+ 
+	}
+
+}

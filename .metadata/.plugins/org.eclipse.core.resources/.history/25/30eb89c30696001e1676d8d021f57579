@@ -1,0 +1,25 @@
+package connection;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class PageAccess {
+	static HttpURLConnection connection;
+	public static void main(String[] args){
+		final String TOKEN = "fa1d7fd58a04dde9cd61869ed94a7ec40c5b9ba6";
+		URL url = new URl("https://dronesim.facets-labs.com/api/");
+		try {
+			connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestProperty("Authorize", TOKEN);
+			connection.setRequestProperty("Accept","application/json");
+			connection.setRequestMethod("GET");
+			int responseCode = connection.getResponseCode();
+			
+			System.out.println(responseCode);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}
